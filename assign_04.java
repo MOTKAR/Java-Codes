@@ -1,6 +1,5 @@
 // Assignment-4
 
-// Importing required packages for File I/O and utilities
 import java.io.*;        // For FileWriter, IOException
 import java.util.*;      // For Scanner, ArrayList
 
@@ -24,9 +23,9 @@ class InvalidCIDException extends Exception {
 
 // Class to store customer details
 class Customer {
-    int cid;        // Customer ID
-    String cname;   // Customer Name
-    double amount;  // Account Balance
+    int cid;      
+    String cname;   
+    double amount;  
 
     // Constructor to initialize customer details
     Customer(int cid, String cname, double amount) {
@@ -49,7 +48,7 @@ public class assign_04{
     // ArrayList to store multiple customers
     static ArrayList<Customer> list = new ArrayList<>();
 
-    // ---------------- CREATE ACCOUNT FUNCTION ----------------
+    // CREATE ACCOUNT FUNCTION 
     static void createAccount() {
         try {
             // Taking CID input
