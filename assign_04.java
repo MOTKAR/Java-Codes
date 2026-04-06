@@ -8,7 +8,7 @@ import java.util.*;      // For Scanner, ArrayList
 // Exception for minimum balance violation
 class MinimumBalanceException extends Exception {
     MinimumBalanceException(String msg) {
-        super(msg);  // Passing custom message to Exception class
+        super(msg);  
     }
 }
 
@@ -19,11 +19,18 @@ class InvalidCIDException extends Exception {
     }
 }
 
+// Exception for duplicate CID
+class DuplicateCIDException extends Exception {
+    DuplicateCIDException(String msg) {
+        super(msg);
+    }
+}
+
 // CUSTOMER CLASS 
 
 // Class to store customer details
 class Customer {
-    int cid;      
+    int cid;        
     String cname;   
     double amount;  
 
@@ -54,11 +61,16 @@ public class assign_04{
             // Taking CID input
             System.out.print("Enter CID (1-20): ");
             int cid = sc.nextInt();
-            sc.nextLine(); // Consume leftover newline
+            sc.nextLine();
 
             // Checking CID range
             if (cid < 1 || cid > 20)
                 throw new InvalidCIDException("CID must be between 1 and 20");
+
+            for (Customer c : list) {
+                if (c.cid == cid)
+                    throw new DuplicateCIDException("CID " + cid + " already exists! No duplicates allowed.");
+            }
 
             // Taking customer name
             System.out.print("Enter Name: ");
@@ -68,13 +80,13 @@ public class assign_04{
             System.out.print("Enter Initial Amount: ");
             double amount = sc.nextDouble();
 
-            // Minimum balance condition
-            if (amount < 1000)
-                throw new MinimumBalanceException("Minimum balance should be Rs. 1000");
-
             // Positive amount condition
             if (amount <= 0)
                 throw new ArithmeticException("Amount must be positive");
+
+            // Minimum balance condition
+            if (amount < 1000)
+                throw new MinimumBalanceException("Minimum balance should be Rs. 1000");
 
             // Creating new customer object
             Customer c = new Customer(cid, name, amount);
@@ -89,7 +101,6 @@ public class assign_04{
             System.out.println("Error: " + e.getMessage());
         }
     }
-
     // WITHDRAW FUNCTION
     static void withdraw() {
         try {
@@ -135,7 +146,7 @@ public class assign_04{
     static void saveToFile() {
         try {
             // Creating FileWriter object to write into file
-            FileWriter fw = new FileWriter("customers.txt");
+            FileWriter fw = new FileWriter("customers.txt",true);
 
             // Writing each customer's data into file
             for (Customer c : list) {
